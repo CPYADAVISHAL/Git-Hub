@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Firebase </title>
+<link rel="stylesheet" href="rfb.css">
+</head>
+<body>
+<div id="login-box">
+  <div class="left">
+    <h1 id='status'>login</h1>
+    <input type="text" id="email" name="email" placeholder="E-mail" />
+    <input type="password" id="password" name="password" placeholder="Password" />
+    <input type="textarea" id="feedback" name="feedback" placeholder="feedback" />
+    
+    <a href="AFHOME.html"><input type="submit"  class ="br" id='signUp' name="signup_submit" value="Sign up" /> </a>
+  </div>
+  
+  <div class="right">
+    <span class="loginwith">Sign in with<br />social network</span>
+    
+    <button class="social-signin facebook">Log in with facebook</button>
+    <button class="social-signin twitter">Log in with Twitter</button>
+    <button class="social-signin google">Log in with Google+</button>
+  </div>
+  <div class="or">OR</div>
+</div>
+</body>
+
+<script type="module">//YEH ISME KERMA PAD RAHA  HER BER SCRIPT DECLERA KERNE KE LIYE
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.10.0/firebase-app.js'
+  import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-database.js"
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        // Your web app's Firebase configuration
+                  const firebaseConfig = {
+                  apiKey: "AIzaSyCrdJVxZBixNQJQ4kR7g_Y7qCdGgpumwlg",
+                  authDomain: "fir-frontend2-3f205.firebaseapp.com",
+                  databaseURL: "https://fir-frontend2-3f205-default-rtdb.firebaseio.com",
+                  projectId: "fir-frontend2-3f205",
+                  storageBucket: "fir-frontend2-3f205.appspot.com",
+                  messagingSenderId: "263850037373",
+                  appId: "1:263850037373:web:84bf82a0e99ff54162a114"
+                };
+                //INTIALISE DATABASE
+                                initializeApp(firebaseConfig);//initilise fire base kerne ke liye
+                                const root = getDatabase();
+                                //WRITE OR TAKE VALUE IN DATABASE
+                                function writeUserData(x,y,z) {
+                                set(ref(root, 'users/' + "userId"), {
+                                  feedback: x,
+                                    email: y,
+                                    password : z
+                                });
+                              }
+                              //READ FROM DATABASE
+                                                         function read1(){
+                                                         const starCountRef = ref(root, 'users/userId/');
+                                                         onValue(starCountRef, (snapshot) => {
+                                                          const email = snapshot.child('email').value();
+                                                          const password = snapshot.child('password').value();
+                                                          const username = snapshot.child('feedback').value();
+                                                          console.log(email);
+                                                          console.log(password);
+                                                          console.log(feedback);
+                                                          writeopen(feedback);
+                                                          
+                                                        });
+                                                      }
+                                                                        //MAKE FUNTION TO OPEN THE DATA IN DIFFENT HTML
+                                                                        function writeopen(x){
+                                                                          document.getElementById('feedback').value = x;
+                                                                        }
+
+                                                                                            read1();
+
+
+
+                                                                                            //TO SAVE THE DATA AFTER CLICKING ON SIGN UP BUTTON 
+                                                                                            signUp.addEventListener('click',(e) => {
+                                                                                            var email = document.getElementById('email').value;
+                                                                                            var password = document.getElementById('password').value;
+                                                                                            var username = document.getElementById('feedback').value;
+                                                                                              writeUserData(username,email,password)
+                                                                                              });
+</script>
+</html>
